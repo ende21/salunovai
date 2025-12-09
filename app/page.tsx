@@ -1,65 +1,74 @@
-import Image from "next/image";
+"use client";
+import { Layout } from "../components/layout/Layout";
+import { Card, CardHeader, CardTitle, CardContent } from "../components/ui/card";
+import { Button } from "../components/ui/button";
+import { Activity, Bot, Clock, TrendingUp, Plus } from "lucide-react";
+import { Badge } from "../components/ui/badge";
+import Link from "next/link";
 
 export default function Home() {
+  const metrics = [
+    { label: "Active Agents", value: "12", icon: <Bot size={24} />, trend: "+3 this week", color: "from-primary-500 to-primary-600" },
+    { label: "Total Interactions", value: "2,847", icon: <Activity size={24} />, trend: "+12% from last month", color: "from-secondary-500 to-secondary-600" },
+    { label: "Avg Response Time", value: "1.2s", icon: <Clock size={24} />, trend: "0.3s faster", color: "from-green-500 to-green-600" },
+    { label: "Success Rate", value: "98.5%", icon: <TrendingUp size={24} />, trend: "+2.1% improvement", color: "from-purple-500 to-purple-600" },
+  ];
+  const recentActivities = [
+    { id: 1, agent: "Customer Support Bot", action: "Completed 45 conversations", time: "2 minutes ago", status: "success" },
+    { id: 2, agent: "Data Analysis Agent", action: "Generated monthly report", time: "15 minutes ago", status: "success" },
+    { id: 3, agent: "Email Assistant", action: "Processed 128 emails", time: "1 hour ago", status: "success" },
+    { id: 4, agent: "Code Review Bot", action: "Reviewed 8 pull requests", time: "2 hours ago", status: "warning" },
+    { id: 5, agent: "Content Writer", action: "Created 3 blog drafts", time: "3 hours ago", status: "success" },
+  ];
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+    <Layout>
+      <div className="space-y-8">
+        {/* Header */}
+        <div className="flex items-center justify-between">
+          <div>
+            <h1 className="text-surface-900 mb-2">Dashboard</h1>
+            <p className="text-surface-600">Welcome back! Here&apos;s what&apos;s happening with your AI agents.</p>
+          </div>
+          <Link href="/agent-management">
+            <Button size="lg">
+              <Plus size={20} />
+              Create Agent
+            </Button>
+          </Link>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+        {/* Metrics */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          {metrics.map((metric, idx) => (
+            <Card key={idx} className={`bg-gradient-to-br ${metric.color}`}>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  {metric.icon}
+                  {metric.label}
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="text-2xl font-bold">{metric.value}</div>
+                <Badge>{metric.trend}</Badge>
+              </CardContent>
+            </Card>
+          ))}
         </div>
-      </main>
-    </div>
+        {/* Recent Activities */}
+        <div>
+          <h2 className="text-lg font-semibold mb-4">Recent Activities</h2>
+          <ul className="space-y-2">
+            {recentActivities.map((activity) => (
+              <li key={activity.id} className="flex items-center justify-between p-4 bg-white rounded shadow">
+                <span>{activity.agent}</span>
+                <span>{activity.action}</span>
+                <span className="text-xs text-gray-500">{activity.time}</span>
+                <Badge variant={activity.status === "success" ? "success" : "warning"}>{activity.status}</Badge>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </Layout>
   );
 }
