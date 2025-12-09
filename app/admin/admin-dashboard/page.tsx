@@ -35,8 +35,8 @@ export default function AdminDashboardPage() {
         <h1 className="text-surface-900 mb-2">Admin Dashboard</h1>
         <p className="text-surface-600">Monitor system performance and user activity</p>
         <div className="mt-2">
-          <a href="/dashboard">
-            <Button variant="outline" size="sm">&larr; Kembali ke Dashboard</Button>
+          <a href="/" className="inline-flex items-center gap-2 rounded-[var(--radius-md)] border-2 border-primary-600 text-primary-600 hover:bg-primary-50 active:bg-primary-100 px-3 py-1.5 text-sm transition-all duration-200">
+            &larr; Back to Dashboard
           </a>
         </div>
       </div>

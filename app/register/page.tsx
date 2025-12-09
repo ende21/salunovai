@@ -52,8 +52,8 @@ export default function Register() {
           <h1 className="text-surface-900 mb-2">Create Account</h1>
           <p className="text-surface-600">Start building with AI agents today</p>
           <div className="mt-4">
-            <a href="/dashboard">
-              <Button variant="outline" size="sm">&larr; Kembali ke Dashboard</Button>
+            <a href="/" className="inline-flex items-center gap-2 rounded-[var(--radius-md)] border-2 border-primary-600 text-primary-600 hover:bg-primary-50 active:bg-primary-100 px-3 py-1.5 text-sm transition-all duration-200">
+              &larr; Back to Dashboard
             </a>
           </div>
         </div>

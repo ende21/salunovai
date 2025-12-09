@@ -81,11 +81,11 @@ export default function ChatPage() {
             </Select>
           </div>
         </div>
-        {/* Tombol kembali ke dashboard */}
+        {/* Back to Dashboard button */}
         <div className="mt-2">
           <a href="/dashboard">
             <Button variant="outline" size="sm">
-              &larr; Kembali ke Dashboard
+              &larr; Back to Dashboard
             </Button>
           </a>
         </div>
