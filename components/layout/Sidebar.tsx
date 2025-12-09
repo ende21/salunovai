@@ -98,7 +98,7 @@ export function Sidebar({ isAdmin = false }: SidebarProps) {
       {/* Footer */}
       <div className="p-4 border-t border-surface-200">
         <button
-          onClick={() => signOut()}
+          onClick={() => signOut({ callbackUrl: "/login" })}
           className="w-full mb-2 py-2 px-4 rounded bg-surface-100 hover:bg-surface-200 text-surface-700 text-sm font-medium transition"
         >
           Sign Out
