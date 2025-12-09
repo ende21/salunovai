@@ -1,5 +1,6 @@
 "use client";
 import React from 'react';
+import { useSession } from 'next-auth/react';
 import { Search, Bell, Shield } from 'lucide-react';
 import Link from 'next/link';
 import { Button } from '../ui/button';
@@ -9,6 +10,9 @@ interface TopBarProps {
 }
 
 export function TopBar({ isAdmin = false }: TopBarProps) {
+  const { data: session } = useSession();
+  const userName = session?.user?.name || "Guest";
+  const initials = userName.split(" ").map(n => n[0]).join("").toUpperCase().slice(0,2);
   return (
     <header className="fixed top-0 left-64 right-0 h-16 bg-white border-b border-surface-200 flex items-center justify-between px-8 z-10">
       {/* Search */}
@@ -53,11 +57,11 @@ export function TopBar({ isAdmin = false }: TopBarProps) {
         {/* User Avatar */}
         <button className="flex items-center gap-3 p-1.5 pr-4 hover:bg-surface-100 rounded-[var(--radius-md)] transition-all">
           <div className="w-8 h-8 rounded-full bg-gradient-to-br from-primary-500 to-secondary-500 flex items-center justify-center text-white text-sm">
-            JD
+            {initials}
           </div>
           <div className="text-left">
-            <div className="text-sm text-surface-900">John Doe</div>
-            <div className="text-xs text-surface-500">{isAdmin ? 'Admin' : 'User'}</div>
+            <div className="text-sm text-surface-900">{userName}</div>
+            <div className="text-xs text-surface-500">{isAdmin ? 'Admin' : (session ? 'User' : 'Guest')}</div>
           </div>
         </button>
       </div>
