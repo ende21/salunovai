@@ -54,16 +54,22 @@ export function TopBar({ isAdmin = false }: TopBarProps) {
           <span className="absolute top-1 right-1 w-2 h-2 bg-error rounded-full"></span>
         </button>
         
-        {/* User Avatar */}
-        <button className="flex items-center gap-3 p-1.5 pr-4 hover:bg-surface-100 rounded-[var(--radius-md)] transition-all">
-          <div className="w-8 h-8 rounded-full bg-gradient-to-br from-primary-500 to-secondary-500 flex items-center justify-center text-white text-sm">
-            {initials}
-          </div>
-          <div className="text-left">
-            <div className="text-sm text-surface-900">{userName}</div>
-            <div className="text-xs text-surface-500">{isAdmin ? 'Admin' : (session ? 'User' : 'Guest')}</div>
-          </div>
-        </button>
+        {/* User Avatar or Sign In */}
+        {session ? (
+          <button className="flex items-center gap-3 p-1.5 pr-4 hover:bg-surface-100 rounded-[var(--radius-md)] transition-all">
+            <div className="w-8 h-8 rounded-full bg-gradient-to-br from-primary-500 to-secondary-500 flex items-center justify-center text-white text-sm">
+              {initials}
+            </div>
+            <div className="text-left">
+              <div className="text-sm text-surface-900">{userName}</div>
+              <div className="text-xs text-surface-500">{isAdmin ? 'Admin' : 'User'}</div>
+            </div>
+          </button>
+        ) : (
+          <Link href="/login">
+            <Button variant="primary" size="sm">Sign In</Button>
+          </Link>
+        )}
       </div>
     </header>
   );
