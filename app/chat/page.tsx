@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { Card } from '../../components/ui/card';
 import { Button } from '../../components/ui/button';
 import { Send, Paperclip, Bot, User } from 'lucide-react';
-import { Select } from '../../components/ui/select';
+import { Select, SelectItem } from '../../components/ui/select';
 
 type SelectOption = {
   label: string;
@@ -70,7 +70,13 @@ export default function ChatPage() {
           </div>
           <div className="flex items-center gap-2">
             <span className="text-xs text-surface-600 mr-2">Model:</span>
-            <Select options={modelOptions} value={selectedModel} onChange={setSelectedModel} />
+            <Select value={selectedModel} onValueChange={setSelectedModel}>
+              {modelOptions.map((option) => (
+                <SelectItem key={option.value} value={option.value}>
+                  {option.label}
+                </SelectItem>
+              ))}
+            </Select>
           </div>
         </div>
       </div>
