@@ -12,7 +12,8 @@ import {
   Key,
   Cog
 } from 'lucide-react';
-import { Link, useLocation } from 'react-router-dom';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 
 interface NavItemProps {
   icon: React.ReactNode;
@@ -24,7 +25,7 @@ interface NavItemProps {
 function NavItem({ icon, label, to, active }: NavItemProps) {
   return (
     <Link
-      to={to}
+      href={to}
       className={`flex items-center gap-3 px-4 py-3 rounded-[var(--radius-md)] transition-all duration-200 ${
         active
           ? 'bg-primary-600 text-white shadow-md'
@@ -42,7 +43,7 @@ interface SidebarProps {
 }
 
 export function Sidebar({ isAdmin = false }: SidebarProps) {
-  const location = useLocation();
+  const pathname = usePathname();
   
   const userNavItems = [
     { icon: <LayoutDashboard size={20} />, label: 'Dashboard', to: '/' },
@@ -87,7 +88,7 @@ export function Sidebar({ isAdmin = false }: SidebarProps) {
             icon={item.icon}
             label={item.label}
             to={item.to}
-            active={location.pathname === item.to}
+            active={pathname === item.to}
           />
         ))}
       </nav>

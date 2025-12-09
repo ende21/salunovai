@@ -1,6 +1,6 @@
 import React from 'react';
 import { Search, Bell, Shield } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import { Button } from '../ui/button';
 
 interface TopBarProps {
@@ -26,7 +26,7 @@ export function TopBar({ isAdmin = false }: TopBarProps) {
       <div className="flex items-center gap-4">
         {/* Admin Panel Link - Only show in user app */}
         {!isAdmin && (
-          <Link to="/admin">
+          <Link href="/admin">
             <Button variant="outline" size="sm">
               <Shield size={18} />
               Admin Panel
@@ -36,7 +36,7 @@ export function TopBar({ isAdmin = false }: TopBarProps) {
         
         {/* Back to App Link - Only show in admin panel */}
         {isAdmin && (
-          <Link to="/">
+          <Link href="/">
             <Button variant="ghost" size="sm">
               ← Back to App
             </Button>
