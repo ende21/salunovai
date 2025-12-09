@@ -13,6 +13,11 @@ export default function SystemSettingsPage() {
       <div>
         <h1 className="text-surface-900 mb-2">System Settings</h1>
         <p className="text-surface-600">Configure global system settings and preferences</p>
+        <div className="mt-2">
+          <a href="/dashboard">
+            <Button variant="outline" size="sm">&larr; Kembali ke Dashboard</Button>
+          </a>
+        </div>
       </div>
       {/* Admin Profile */}
       <Card><CardHeader><div className="flex items-center gap-2"><User size={20} className="text-primary-600" /><CardTitle>Admin Profile</CardTitle></div></CardHeader><CardContent className="space-y-4"><div className="flex items-center gap-6 mb-6"><div className="w-20 h-20 rounded-full bg-gradient-to-br from-error to-red-700 flex items-center justify-center text-white text-2xl">AD</div><div><Badge variant="error">Super Admin</Badge><p className="text-sm text-surface-600 mt-2">admin@platform.ai</p></div></div><div className="grid grid-cols-2 gap-4"><Input label="First Name" defaultValue="Admin" /><Input label="Last Name" defaultValue="User" /></div><Input label="Email Address" type="email" defaultValue="admin@platform.ai" /><div className="pt-4 border-t border-surface-200"><Button>Update Profile</Button></div></CardContent></Card>

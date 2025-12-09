@@ -48,7 +48,7 @@ export function Sidebar({ isAdmin = false }: SidebarProps) {
   const userNavItems = [
     { icon: <LayoutDashboard size={20} />, label: 'Dashboard', to: '/' },
     { icon: <FolderKanban size={20} />, label: 'Projects', to: '/projects' },
-    { icon: <Bot size={20} />, label: 'Agent Management', to: '/agents' },
+    // { icon: <Bot size={20} />, label: 'Agent Management', to: '/agents' }, // disembunyikan
     { icon: <MessageSquare size={20} />, label: 'Chat', to: '/chat' },
     { icon: <Settings size={20} />, label: 'Settings', to: '/settings' },
   ];

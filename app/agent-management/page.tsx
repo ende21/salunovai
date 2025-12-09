@@ -28,6 +28,11 @@ export default function AgentManagementPage() {
         <div>
           <h1 className="text-surface-900 mb-2">Agent Management</h1>
           <p className="text-surface-600">Configure and control your AI agents</p>
+          <div className="mt-2">
+            <a href="/dashboard">
+              <Button variant="outline" size="sm">&larr; Kembali ke Dashboard</Button>
+            </a>
+          </div>
         <div className="flex items-center gap-3">
           <Button 
             variant={isRunning ? 'danger' : 'primary'}

@@ -11,15 +11,34 @@ export default function Register() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
 
-  const handleRegister = (e: React.FormEvent) => {
+  const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
+    setError("");
+    setSuccess("");
     if (password !== confirmPassword) {
-      alert("Passwords do not match!");
+      setError("Passwords do not match!");
       return;
     }
-    // Handle registration logic here
-    console.log("Register:", { fullName, email, password });
+    setLoading(true);
+    try {
+      const res = await fetch("/api/auth/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name: fullName, email, password }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || "Gagal registrasi");
+      setSuccess("Registrasi berhasil! Silakan login.");
+      setTimeout(() => window.location.href = "/login", 1500);
+    } catch (err: any) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -32,6 +51,11 @@ export default function Register() {
           </div>
           <h1 className="text-surface-900 mb-2">Create Account</h1>
           <p className="text-surface-600">Start building with AI agents today</p>
+          <div className="mt-4">
+            <a href="/dashboard">
+              <Button variant="outline" size="sm">&larr; Kembali ke Dashboard</Button>
+            </a>
+          </div>
         </div>
         <Card>
           <CardContent>
@@ -68,7 +92,9 @@ export default function Register() {
               <Input label="Email Address" type="email" placeholder="Enter your email" icon={<Mail size={18} />} value={email} onChange={(e) => setEmail(e.target.value)} required />
               <Input label="Password" type="password" placeholder="Create a password" icon={<Lock size={18} />} value={password} onChange={(e) => setPassword(e.target.value)} required />
               <Input label="Confirm Password" type="password" placeholder="Confirm your password" icon={<Lock size={18} />} value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} required />
-              <Button type="submit" className="w-full" size="lg">Sign Up</Button>
+              <Button type="submit" className="w-full" size="lg" disabled={loading}>{loading ? "Mendaftar..." : "Sign Up"}</Button>
+              {error && <div className="text-red-600 text-center">{error}</div>}
+              {success && <div className="text-green-600 text-center">{success}</div>}
             </form>
             {/* Login Link */}
             <div className="mt-6 text-center text-sm">

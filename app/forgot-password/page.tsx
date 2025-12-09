@@ -32,6 +32,11 @@ export default function ForgotPassword() {
               : "Enter your email to receive a password reset link"
             }
           </p>
+          <div className="mt-4">
+            <a href="/dashboard">
+              <Button variant="outline" size="sm">&larr; Kembali ke Dashboard</Button>
+            </a>
+          </div>
         </div>
         <Card>
           <CardContent>

@@ -25,6 +25,11 @@ export default function ProjectsPage() {
         <div>
           <h1 className="text-surface-900 mb-2">Projects</h1>
           <p className="text-surface-600">Manage and monitor all your AI agent projects</p>
+          <div className="mt-2">
+            <a href="/dashboard">
+              <Button variant="outline" size="sm">&larr; Kembali ke Dashboard</Button>
+            </a>
+          </div>
         </div>
         <Button size="lg">
           <Plus size={20} />

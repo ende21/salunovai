@@ -58,6 +58,11 @@ export default function APIKeysPage() {
         <div>
           <h1 className="text-surface-900 mb-2">API & Keys</h1>
           <p className="text-surface-600">Manage API keys and access controls</p>
+          <div className="mt-2">
+            <a href="/dashboard">
+              <Button variant="outline" size="sm">&larr; Kembali ke Dashboard</Button>
+            </a>
+          </div>
         </div>
         <div className="flex items-center gap-3">
           <Button variant="outline"><BookOpen size={20} />Documentation</Button>

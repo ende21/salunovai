@@ -81,6 +81,14 @@ export default function ChatPage() {
             </Select>
           </div>
         </div>
+        {/* Tombol kembali ke dashboard */}
+        <div className="mt-2">
+          <a href="/dashboard">
+            <Button variant="outline" size="sm">
+              &larr; Kembali ke Dashboard
+            </Button>
+          </a>
+        </div>
       </div>
       {/* Chat Container */}
       <Card className="flex-1 flex flex-col overflow-hidden">

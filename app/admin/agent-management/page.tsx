@@ -78,6 +78,11 @@ export default function AgentManagementAdminPage() {
         <div>
           <h1 className="text-surface-900 mb-2">AI Agent Management</h1>
           <p className="text-surface-600">Monitor and control all AI agents across the platform</p>
+              <div className="mt-2">
+                <a href="/dashboard">
+                  <Button variant="outline" size="sm">&larr; Kembali ke Dashboard</Button>
+                </a>
+              </div>
         </div>
         <Button size="lg" onClick={() => setShowModal(true)}>
           <Plus size={20} />

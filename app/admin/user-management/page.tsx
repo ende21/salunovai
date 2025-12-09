@@ -47,6 +47,11 @@ const getStatusBadge = (status: 'active' | 'suspended' | 'inactive') => {
         <div>
           <h1 className="text-surface-900 mb-2">User Management</h1>
           <p className="text-surface-600">Manage user accounts and permissions</p>
+          <div className="mt-2">
+            <a href="/dashboard">
+              <Button variant="outline" size="sm">&larr; Kembali ke Dashboard</Button>
+            </a>
+          </div>
         </div>
         <Button size="lg"><UserPlus size={20} />Add User</Button>
       </div>

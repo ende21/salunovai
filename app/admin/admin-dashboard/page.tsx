@@ -3,6 +3,7 @@ import React from 'react';
 import { Card, CardHeader, CardTitle, CardContent } from '../../../components/ui/card';
 import { Users, Bot, Zap, TrendingUp, AlertCircle, CheckCircle, Activity } from 'lucide-react';
 import { Badge } from '../../../components/ui/badge';
+import { Button } from '../../../components/ui/button';
 
 export default function AdminDashboardPage() {
   const metrics = [
@@ -33,6 +34,11 @@ export default function AdminDashboardPage() {
       <div>
         <h1 className="text-surface-900 mb-2">Admin Dashboard</h1>
         <p className="text-surface-600">Monitor system performance and user activity</p>
+        <div className="mt-2">
+          <a href="/dashboard">
+            <Button variant="outline" size="sm">&larr; Kembali ke Dashboard</Button>
+          </a>
+        </div>
       </div>
       {/* Metrics Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">

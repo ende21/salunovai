@@ -13,6 +13,11 @@ export default function SettingsPage() {
       <div>
         <h1 className="text-surface-900 mb-2">Settings</h1>
         <p className="text-surface-600">Manage your account and application preferences</p>
+        <div className="mt-2">
+          <a href="/dashboard">
+            <Button variant="outline" size="sm">&larr; Kembali ke Dashboard</Button>
+          </a>
+        </div>
       </div>
       {/* User Profile */}
       <Card>

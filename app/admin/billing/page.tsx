@@ -28,6 +28,11 @@ export default function BillingPage() {
       <div>
         <h1 className="text-surface-900 mb-2">Billing</h1>
         <p className="text-surface-600">Manage subscriptions, credits, and billing information</p>
+        <div className="mt-2">
+          <a href="/dashboard">
+            <Button variant="outline" size="sm">&larr; Kembali ke Dashboard</Button>
+          </a>
+        </div>
       </div>
       {/* Current Plan & Balance */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
