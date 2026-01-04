@@ -28,6 +28,7 @@ export async function POST(req: NextRequest) {
     await db.collection('users').insertOne(newUser);
     return NextResponse.json({ message: 'Registrasi berhasil.' });
   } catch (error) {
-    return NextResponse.json({ error: 'Terjadi kesalahan server.' }, { status: 500 });
+    console.error('Register error:', error);
+    return NextResponse.json({ error: 'Terjadi kesalahan server.', detail: error instanceof Error ? error.message : String(error) }, { status: 500 });
   }
 }
