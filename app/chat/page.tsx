@@ -18,40 +18,17 @@ interface Message {
 }
 
 export default function ChatPage() {
-  const [messages] = useState<Message[]>([
+  const [messages, setMessages] = useState<Message[]>([
     {
       id: 1,
       role: 'assistant',
       content: "Hello! I'm your AI assistant. How can I help you today?",
-      timestamp: '10:30 AM'
-    },
-    {
-      id: 2,
-      role: 'user',
-      content: 'Can you help me analyze the customer feedback data from last month?',
-      timestamp: '10:31 AM'
-    },
-    {
-      id: 3,
-      role: 'assistant',
-      content: "Of course! I'd be happy to help you analyze the customer feedback data. To provide you with the most accurate analysis, could you please share the data file or let me know where I can access it? I can help you identify trends, sentiment analysis, common themes, and actionable insights.",
-      timestamp: '10:31 AM'
-    },
-    {
-      id: 4,
-      role: 'user',
-      content: 'The data is in our analytics dashboard. Can you access it directly?',
-      timestamp: '10:32 AM'
-    },
-    {
-      id: 5,
-      role: 'assistant',
-      content: 'Yes, I have access to your analytics dashboard. Let me retrieve the customer feedback data from last month and perform a comprehensive analysis. This will take just a moment...',
-      timestamp: '10:32 AM'
-    },
+      timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+    }
   ]);
   
   const [inputValue, setInputValue] = useState('');
+  const [loading, setLoading] = useState(false);
   const modelOptions: SelectOption[] = [
     { label: 'GLM-4.6', value: 'glm-4.6' },
     { label: 'GLM-4.6V', value: 'glm-4.6v' },
@@ -59,6 +36,51 @@ export default function ChatPage() {
   ];
   const [selectedModel, setSelectedModel] = useState(modelOptions[0].value);
   
+  // Kirim pesan ke API agent
+  const sendMessage = async () => {
+    if (!inputValue.trim()) return;
+    const userMsg: Message = {
+      id: Date.now(),
+      role: 'user',
+      content: inputValue,
+      timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+    };
+    setMessages((msgs) => [...msgs, userMsg]);
+    setInputValue("");
+    setLoading(true);
+    try {
+      const res = await fetch("/api/agent", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ prompt: userMsg.content })
+      });
+      const data = await res.json();
+      const aiMsg: Message = {
+        id: Date.now() + 1,
+        role: 'assistant',
+        content: data.result || data.error || "(No response)",
+        timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+      };
+      setMessages((msgs) => [...msgs, aiMsg]);
+    } catch (err: any) {
+      setMessages((msgs) => [...msgs, {
+        id: Date.now() + 2,
+        role: 'assistant',
+        content: "Terjadi error: " + (err?.message || err),
+        timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+      }]);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleInputKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      if (!loading) sendMessage();
+    }
+  };
+
   return (
     <div className="h-[calc(100vh-8rem)] flex flex-col">
       {/* Header */}
@@ -139,17 +161,13 @@ export default function ChatPage() {
                 placeholder="Type your message..."
                 rows={1}
                 className="w-full px-4 py-3 bg-surface-50 border border-surface-200 rounded-[var(--radius-md)] focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent resize-none"
-                onKeyDown={(e) => {
-                  if (e.key === 'Enter' && !e.shiftKey) {
-                    e.preventDefault();
-                    // Handle send message
-                  }
-                }}
+                onKeyDown={handleInputKeyDown}
+                disabled={loading}
               />
             </div>
             
-            <Button size="lg" className="h-12">
-              <Send size={20} />
+            <Button size="lg" className="h-12" onClick={sendMessage} disabled={loading || !inputValue.trim()}>
+              {loading ? "Loading..." : <Send size={20} />}
             </Button>
           </div>
           
