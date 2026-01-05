@@ -13,7 +13,7 @@ export const genAI = new GoogleGenerativeAI(GEMINI_API_KEY);
  * @returns Promise<string>
  */
 export async function generateGeminiText(prompt: string): Promise<string> {
-  const model = genAI.getGenerativeModel({ model: "gemini-1.0-pro" });
+  const model = genAI.getGenerativeModel({ model: "gemini-pro" });
   const result = await model.generateContent(prompt);
   return result.response.text();
 }
@@ -24,7 +24,7 @@ export async function generateGeminiText(prompt: string): Promise<string> {
  * @returns Promise<string> (base64 image)
  */
 export async function generateGeminiImage(prompt: string): Promise<string> {
-  const model = genAI.getGenerativeModel({ model: "gemini-1.0-pro-vision" });
+  const model = genAI.getGenerativeModel({ model: "gemini-pro-vision" });
   const result = await model.generateContent({ contents: [{ role: "user", parts: [{ text: prompt }] }] });
   // result.response.candidates[0].content.parts[0].inlineData.data (base64)
   return result.response.candidates?.[0]?.content?.parts?.[0]?.inlineData?.data || "";
@@ -36,7 +36,7 @@ export async function generateGeminiImage(prompt: string): Promise<string> {
  * @returns Promise<string>
  */
 export async function understandGeminiImage(imageBase64: string): Promise<string> {
-  const model = genAI.getGenerativeModel({ model: "gemini-1.0-pro-vision" });
+  const model = genAI.getGenerativeModel({ model: "gemini-pro-vision" });
   const result = await model.generateContent({
     contents: [{ role: "user", parts: [{ inlineData: { data: imageBase64, mimeType: "image/png" } }] }],
   });
@@ -50,7 +50,7 @@ export async function understandGeminiImage(imageBase64: string): Promise<string
  * @returns Promise<any>
  */
 export async function geminiFunctionCalling(prompt: string, functions: any[]): Promise<any> {
-  const model = genAI.getGenerativeModel({ model: "gemini-1.0-pro" });
+  const model = genAI.getGenerativeModel({ model: "gemini-pro" });
   const result = await model.generateContent({
     contents: [{ role: "user", parts: [{ text: prompt }] }],
     tools: functions,
@@ -64,7 +64,7 @@ export async function geminiFunctionCalling(prompt: string, functions: any[]): P
  * @returns Promise<number[]>
  */
 export async function geminiEmbedding(text: string): Promise<number[]> {
-  const model = genAI.getGenerativeModel({ model: "gemini-1.0-pro" });
+  const model = genAI.getGenerativeModel({ model: "gemini-pro" });
   const result = await model.embedContent({ content: { role: "user", parts: [{ text }] } });
   return result.embedding.values;
 }
