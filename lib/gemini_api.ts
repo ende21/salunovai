@@ -54,19 +54,19 @@ const functionConfig = {
 
 // Generate text
 const textParams: GenerateContentParameters = {
-  model: 'models/gemini-pro',
+  model: 'gemini-pro',
   contents: [content],
 };
 
 // Generate image
 const imageParams: GenerateImagesParameters = {
-  model: 'models/gemini-pro-vision',
+  model: 'gemini-pro-vision',
   prompt: 'Halo Gemini, buat puisi tentang AI.',
 };
 
 // Embedding
 const embedParams: EmbedContentParameters = {
-  model: 'models/gemini-embedding-001',
+  model: 'text-embedding-004',
   contents: [content],
 };
 
