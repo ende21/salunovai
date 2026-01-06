@@ -2,7 +2,7 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
 // API Key Gemini
-const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
+const GEMINI_API_KEY = process.env.GEMINI_API_KEY || "";
 
 // Inisialisasi klien Gemini
 export const genAI = new GoogleGenerativeAI(GEMINI_API_KEY);
@@ -27,7 +27,7 @@ import {
 
 // Konfigurasi SDK
 const options: GoogleGenAIOptions = {
-  apiKey: process.env.GEMINI_API_KEY,
+  apiKey: process.env.GEMINI_API_KEY || "",
   vertexai: false,
 };
 const ai = new GoogleGenAI(options);

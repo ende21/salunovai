@@ -8,14 +8,15 @@ import bcrypt from 'bcryptjs';
 
 export const authOptions: AuthOptions = {
   providers: [
-    Google({
-      clientId: process.env.GOOGLE_CLIENT_ID!,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
-    }),
-    GitHub({
-      clientId: process.env.GITHUB_CLIENT_ID!,
-      clientSecret: process.env.GITHUB_CLIENT_SECRET!,
-    }),
+    // Google and GitHub providers disabled until credentials are provided
+    // Google({
+    //   clientId: process.env.GOOGLE_CLIENT_ID!,
+    //   clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
+    // }),
+    // GitHub({
+    //   clientId: process.env.GITHUB_CLIENT_ID!,
+    //   clientSecret: process.env.GITHUB_CLIENT_SECRET!,
+    // }),
     CredentialsProvider({
       name: "Credentials",
       credentials: {
@@ -24,18 +25,27 @@ export const authOptions: AuthOptions = {
       },
       async authorize(credentials) {
         if (!credentials?.email || !credentials?.password) return null;
-        const client: MongoClient = await clientPromise;
-        const db = client.db();
-        const user = await db.collection('users').findOne({ email: credentials.email });
-        if (!user || !user.password) return null;
-        const isMatch = await bcrypt.compare(credentials.password, user.password);
-        if (!isMatch) return null;
-        return {
-          id: user._id.toString(),
-          email: user.email,
-          name: user.name,
-          role: user.role,
-        };
+        
+        try {
+          const client: MongoClient = await clientPromise;
+          const db = client.db();
+          const user = await db.collection('users').findOne({ email: credentials.email });
+          
+          if (!user || !user.password) return null;
+          
+          const isMatch = await bcrypt.compare(credentials.password, user.password);
+          if (!isMatch) return null;
+          
+          return {
+            id: user._id.toString(),
+            email: user.email,
+            name: user.name,
+            role: user.role,
+          };
+        } catch (error) {
+          console.error('Database connection error:', error);
+          return null;
+        }
       },
     }),
   ],
