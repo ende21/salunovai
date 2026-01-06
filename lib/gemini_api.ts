@@ -106,8 +106,8 @@ export async function generateImageFromClientPrompt(clientPrompt: string) {
  * @returns Promise<string>
  */
 export async function generateGeminiText(prompt: string): Promise<string> {
-  const model = genAI.getGenerativeModel({ model: "gemini-pro" });
-  const result = await model.generateContent(prompt);
+  const model = genAI.getGenerativeModel({ model: "models/gemini-pro" });
+  const result = await model.generateContent({ contents: [{ role: "user", parts: [{ text: prompt }] }] });
   return result.response.text();
 }
 
@@ -143,7 +143,7 @@ export async function understandGeminiImage(imageBase64: string): Promise<string
  * @returns Promise<any>
  */
 export async function geminiFunctionCalling(prompt: string, functions: any[]): Promise<any> {
-  const model = genAI.getGenerativeModel({ model: "gemini-pro" });
+  const model = genAI.getGenerativeModel({ model: "models/gemini-pro" });
   const result = await model.generateContent({
     contents: [{ role: "user", parts: [{ text: prompt }] }],
     tools: functions,
@@ -157,7 +157,7 @@ export async function geminiFunctionCalling(prompt: string, functions: any[]): P
  * @returns Promise<number[]>
  */
 export async function geminiEmbedding(text: string): Promise<number[]> {
-  const model = genAI.getGenerativeModel({ model: "gemini-pro" });
+  const model = genAI.getGenerativeModel({ model: "models/gemini-embedding-001" });
   const result = await model.embedContent({ content: { role: "user", parts: [{ text }] } });
   return result.embedding.values;
 }
