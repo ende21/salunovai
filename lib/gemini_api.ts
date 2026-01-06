@@ -6,6 +6,99 @@ const GEMINI_API_KEY = process.env.GEMINI_API_KEY || "AIzaSyCX0WNAy9nlYQPbc_qDpS
 
 // Inisialisasi klien Gemini
 export const genAI = new GoogleGenerativeAI(GEMINI_API_KEY);
+import {
+  GoogleGenAI,
+  GoogleGenAIOptions,
+  Content,
+  Part,
+  CreateChatParameters,
+  FunctionDeclaration,
+  FunctionCallingConfigMode,
+  HarmCategory,
+  HarmBlockThreshold,
+  GenerateContentParameters,
+  GenerateImagesParameters,
+  EmbedContentParameters,
+  SafetySetting,
+  Tool,
+  UploadFileParameters,
+  DownloadFileParameters,
+} from '@google/genai';
+
+// Konfigurasi SDK
+const options: GoogleGenAIOptions = {
+  apiKey: process.env.GEMINI_API_KEY,
+  vertexai: false,
+};
+const ai = new GoogleGenAI(options);
+
+// Contoh input chat/text/image
+const content: Content = {
+  role: 'user',
+  parts: [{ text: 'Halo Gemini, buat puisi tentang AI.' } as Part],
+};
+
+// Function Calling
+const functionDeclaration: FunctionDeclaration = {
+  name: 'getWeather',
+  parametersJsonSchema: {
+    type: 'object',
+    properties: { location: { type: 'string' } },
+    required: ['location'],
+  },
+};
+const functionConfig = {
+  mode: FunctionCallingConfigMode.ANY,
+  allowedFunctionNames: ['getWeather'],
+};
+
+// Generate text
+const textParams: GenerateContentParameters = {
+  model: 'models/gemini-pro',
+  contents: [content],
+};
+
+// Generate image
+const imageParams: GenerateImagesParameters = {
+  model: 'models/gemini-pro-vision',
+  prompt: 'Halo Gemini, buat puisi tentang AI.',
+};
+
+// Embedding
+const embedParams: EmbedContentParameters = {
+  model: 'models/gemini-embedding-001',
+  contents: [content],
+};
+
+// Safety
+const safety: SafetySetting = {
+  category: HarmCategory.HARM_CATEGORY_HATE_SPEECH,
+  threshold: HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE,
+};
+
+// Tool (Google Search)
+const tool: Tool = {
+  googleSearch: {},
+};
+
+// File upload/download
+const uploadConfig: UploadFileParameters = {
+  file: new File(["isi file"], "file.txt"),
+};
+const downloadConfig: DownloadFileParameters = {
+  file: "file_id",
+  downloadPath: "output.txt",
+};
+
+// Implementasi API
+// Fungsi image AI yang menerima prompt dari client dan membalas otomatis
+export async function generateImageFromClientPrompt(clientPrompt: string) {
+  const imageParams = {
+    model: 'models/gemini-pro-vision',
+    prompt: clientPrompt,
+  };
+  return await ai.models.generateImages(imageParams);
+}
 
 /**
  * Generate teks dengan Gemini
