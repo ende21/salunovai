@@ -1,0 +1,11 @@
+*.tgz
+*.swp
+
+dist/**/*
+temp/**/*
+
+node_modules
+
+sdk-samples/js_files_to_run.txt
+sdk-samples/build/**/*
+sdk-samples/web/dist/**/*
