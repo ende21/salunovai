@@ -94,7 +94,7 @@ const downloadConfig: DownloadFileParameters = {
 // Fungsi image AI yang menerima prompt dari client dan membalas otomatis
 export async function generateImageFromClientPrompt(clientPrompt: string) {
   const imageParams = {
-    model: 'models/gemini-pro-vision',
+    model: 'models/gemini-1.5-flash',
     prompt: clientPrompt,
   };
   return await ai.models.generateImages(imageParams);
@@ -106,7 +106,7 @@ export async function generateImageFromClientPrompt(clientPrompt: string) {
  * @returns Promise<string>
  */
 export async function generateGeminiText(prompt: string): Promise<string> {
-  const model = genAI.getGenerativeModel({ model: "models/gemini-pro" });
+  const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
   const result = await model.generateContent({ contents: [{ role: "user", parts: [{ text: prompt }] }] });
   return result.response.text();
 }
@@ -117,7 +117,7 @@ export async function generateGeminiText(prompt: string): Promise<string> {
  * @returns Promise<string> (base64 image)
  */
 export async function generateGeminiImage(prompt: string): Promise<string> {
-  const model = genAI.getGenerativeModel({ model: "gemini-pro-vision" });
+  const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
   const result = await model.generateContent({ contents: [{ role: "user", parts: [{ text: prompt }] }] });
   // result.response.candidates[0].content.parts[0].inlineData.data (base64)
   return result.response.candidates?.[0]?.content?.parts?.[0]?.inlineData?.data || "";
@@ -129,7 +129,7 @@ export async function generateGeminiImage(prompt: string): Promise<string> {
  * @returns Promise<string>
  */
 export async function understandGeminiImage(imageBase64: string): Promise<string> {
-  const model = genAI.getGenerativeModel({ model: "gemini-pro-vision" });
+  const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
   const result = await model.generateContent({
     contents: [{ role: "user", parts: [{ inlineData: { data: imageBase64, mimeType: "image/png" } }] }],
   });
@@ -143,7 +143,7 @@ export async function understandGeminiImage(imageBase64: string): Promise<string
  * @returns Promise<any>
  */
 export async function geminiFunctionCalling(prompt: string, functions: any[]): Promise<any> {
-  const model = genAI.getGenerativeModel({ model: "models/gemini-pro" });
+  const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
   const result = await model.generateContent({
     contents: [{ role: "user", parts: [{ text: prompt }] }],
     tools: functions,
@@ -157,7 +157,7 @@ export async function geminiFunctionCalling(prompt: string, functions: any[]): P
  * @returns Promise<number[]>
  */
 export async function geminiEmbedding(text: string): Promise<number[]> {
-  const model = genAI.getGenerativeModel({ model: "models/gemini-embedding-001" });
+  const model = genAI.getGenerativeModel({ model: "text-embedding-004" });
   const result = await model.embedContent({ content: { role: "user", parts: [{ text }] } });
   return result.embedding.values;
 }
